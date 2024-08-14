@@ -7,7 +7,11 @@ def get_recent_messages():
     file_name = "stored_data.json"
     learn_instruction = {
         "role": "system",
-        "content": "You are interviewing the user for a job as a retail assistant. Ask short questions that are relevant to the junior position. Your name is Jefferson. The user is called Ryan. Keep your answers under 30 seconds",
+        "content": (
+            "You are interviewing the user for a job as a software developer. "
+            "Ask short questions that are relevant to the junior position. "
+            "Your name is Jefferson. The user is called Ryan. Keep your answers under 30 seconds"
+        ),
     }
 
     messages = []
@@ -22,7 +26,7 @@ def get_recent_messages():
         learn_instruction["content"] = (
             learn_instruction["content"] + " Your response will include some sarcasm."
         )
-
+    print("LEARN INSTRUCTION: ", learn_instruction)
     messages.append(learn_instruction)
 
     try:
@@ -37,7 +41,24 @@ def get_recent_messages():
                     for item in data[-5]:
                         messages.append(item)
     except Exception as e:
-        print(e)
+        print("GET_RECENT_MESSAGES ERROR: ", e)
         return {"message": "Error decoding audio"}
 
     return messages
+
+
+# Store messages
+def store_messages(request_message, response_message):
+    file_name = "stored_data.json"
+
+    # exclude initial prompt from get_recent_messages
+    messages = get_recent_messages()[1:]
+
+    user_message = {"role": "user", "content": request_message}
+    assistance_message = {"role": "assistant", "content": response_message}
+
+    messages.append(user_message)
+    messages.append(assistance_message)
+
+    with open(file_name, "w") as f:
+        json.dump(messages, f)

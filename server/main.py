@@ -1,8 +1,9 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from functions.database import store_messages
 
 # Module imports
-from functions.openai_requests import convert_audio_to_text
+from functions.openai_requests import convert_audio_to_text, get_chat_response
 
 app = FastAPI()
 
@@ -38,9 +39,17 @@ async def get_audio():
 
         message_decoded = convert_audio_to_text(audio_input)
 
+        if not message_decoded:
+            return HTTPException(status_code=400, detail="Failed to decode audio")
+
         print("Message Decoded: ", message_decoded)
-        print("hello filer")
+
+        chat_response = get_chat_response(message_decoded)
+        print("CHAT RESPONSE", chat_response)
+
+        store_messages(message_decoded, chat_response)
+
         return "Done"
     except Exception as e:
-        print(e)
+        print("GET_AUDIO ERROR: ", e)
         return {"message": "Error decoding audio"}
