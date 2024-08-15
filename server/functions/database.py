@@ -20,13 +20,13 @@ def get_recent_messages():
     x = random.uniform(0, 1)
     if x < 0.5:
         learn_instruction["content"] = (
-            learn_instruction["content"] + " Your response will include some dry humor."
+            learn_instruction["content"] + " Your response will include some sass."
         )
     else:
         learn_instruction["content"] = (
-            learn_instruction["content"] + " Your response will include some sarcasm."
+            learn_instruction["content"]
+            + " Your response will include some dry humour."
         )
-    print("LEARN INSTRUCTION: ", learn_instruction)
     messages.append(learn_instruction)
 
     try:
@@ -62,3 +62,9 @@ def store_messages(request_message, response_message):
 
     with open(file_name, "w") as f:
         json.dump(messages, f)
+
+
+# Clear stored messages
+def reset_messages():
+    with open("stored_data.json", "w") as file:
+        file.write("[]")

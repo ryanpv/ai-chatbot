@@ -20,10 +20,10 @@ def convert_audio_to_text(audio_file):
 
 # Openai - ChatGPT
 def get_chat_response(message_input):
-    print("GET_CHAT_RESPONSE: ", message_input)
     messages = get_recent_messages()
     user_message = {"role": "user", "content": message_input}
     messages.append(user_message)
+
     print("MESSAGES: ", messages)
 
     try:
@@ -31,7 +31,6 @@ def get_chat_response(message_input):
             model="gpt-3.5-turbo",
             messages=messages,
         )
-        print(response)
         # Returned message from ChatGPT
         message_text = response["choices"][0]["message"]["content"]
         return message_text
