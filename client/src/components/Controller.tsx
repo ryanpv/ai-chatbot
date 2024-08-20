@@ -21,7 +21,15 @@ function Controller() {
         <Title setMessages={ setMessages } />
       </div>
       <div className='flex flex-col justify-between h-full overflow-y-scroll pb-96'>
-        Placeholder
+
+        {/* Recorder  */}
+        <div className='fixed bottom-0 w-full py-6 border-t text-center bg-gradient-to-r from-sky-500 to-green-500'>
+          <div className='flex justify-center items-center w-full'>
+            <div>
+              Recorder
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   )
