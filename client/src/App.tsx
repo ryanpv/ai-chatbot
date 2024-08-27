@@ -9,7 +9,7 @@ function App() {
       {/* <Controller /> */}
       <Routes>
         <Route path="/" element={ <Controller /> } />
-        <Route path="/test" element={ <TestElement/> } />
+        {/* <Route path="/test" element={ <TestElement/> } /> */}
       </Routes>
 
     </div>
