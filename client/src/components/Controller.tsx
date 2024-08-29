@@ -58,10 +58,31 @@ function Controller() {
 
   return (
     <div className='h-screen overflow-y-hidden'>
-      <div>
-        <Title setMessages={ setMessages } />
-      </div>
+      <Title setMessages={ setMessages } />
       <div className='flex flex-col justify-between h-full overflow-y-scroll pb-96'>
+        {/* Conversation */}
+        <div className='mt-5 px-5'>
+          { messages.map((audio, idx) => {
+            console.log("AUDIO: ", audio)
+            return (
+              <div 
+                key={ idx + audio.sender } 
+                className={ "flex flex-col " + (audio.sender === "bot" && "flex items-end") }
+              >
+                <div className='mt-4'>
+                  <p 
+                    className={ audio.sender === "bot" ? "text-right mr-2 italic text-green-500" : "ml-2 italic text-blue-500" }
+                  >
+                    { audio.sender }
+                  </p>
+
+                  {/* Audio Message  */}
+                  <audio src={ audio.blobUrl } className='appearance-none' controls />
+                </div>
+              </div>
+            )
+          })}
+        </div>
 
         {/* Recorder  */}
         <div className='fixed bottom-0 w-full py-6 border-t text-center bg-gradient-to-r from-sky-500 to-green-500'>
