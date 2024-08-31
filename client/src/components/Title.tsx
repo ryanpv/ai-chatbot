@@ -43,7 +43,6 @@ export default function Title({ setMessages }: Props) {
           />
         </svg>
       </button>
-
     </div>
   )
 }

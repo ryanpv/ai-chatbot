@@ -15,7 +15,7 @@ function Controller() {
 
   const handleStop = async(blobUrl: string) => {
     try {
-      setLoading(true);
+      setLoading(true);    
   
       // append recorded message to messages array
       const myMessage = { sender: "me", blobUrl };
@@ -27,6 +27,8 @@ function Controller() {
         .then(async (blob) => {
           const formData = new FormData();
           formData.append("file", blob, "myFile.wav");
+          console.log("FORM DATA: ", formData);
+          
   
           // Send form data to server
           await axios.post("http://localhost:8000/audio", formData, { 
@@ -39,15 +41,15 @@ function Controller() {
   
             const botMessage = { sender: "bot", blobUrl: audio.src };
             messagesArr.push(botMessage);
-  
             setMessages(messagesArr);
+
+            // Automatically play bot's response
+            setLoading(false);
+            audio.play();            
           }).catch((err) => {
             console.log(err);
           })
-  
         });
-  
-  
       } catch (error) {
         console.log("RECORDING ERROR: ", error);
       } finally {
@@ -59,11 +61,11 @@ function Controller() {
   return (
     <div className='h-screen overflow-y-hidden'>
       <Title setMessages={ setMessages } />
+
       <div className='flex flex-col justify-between h-full overflow-y-scroll pb-96'>
         {/* Conversation */}
         <div className='mt-5 px-5'>
-          { messages.map((audio, idx) => {
-            console.log("AUDIO: ", audio)
+          { !loading && messages.map((audio, idx) => {
             return (
               <div 
                 key={ idx + audio.sender } 
@@ -80,14 +82,25 @@ function Controller() {
                   <audio src={ audio.blobUrl } className='appearance-none' controls />
                 </div>
               </div>
-            )
-          })}
+              );
+            })
+          }
+
+          { messages.length === 0 && !loading && (
+            <div className='text-center font-light italic mt-10'>Send chatbot a message...</div>
+          ) }
+
+          { loading && (
+            <div className='text-center font-light italic mt-10 animate-pulse'>Just a moment please...</div>
+          ) }
         </div>
 
         {/* Recorder  */}
         <div className='fixed bottom-0 w-full py-6 border-t text-center bg-gradient-to-r from-sky-500 to-green-500'>
           <div className='flex justify-center items-center w-full'>
-            <RecordMessage handleStop={ handleStop } />
+            <div>
+              <RecordMessage handleStop={ handleStop } />
+            </div>
           </div>
         </div>
       </div>
