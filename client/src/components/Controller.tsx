@@ -20,40 +20,37 @@ function Controller() {
       // append recorded message to messages array
       const myMessage = { sender: "me", blobUrl };
       const messagesArr = [...messages, myMessage];
-  
-      // convert blob url to blob object
-      fetch(blobUrl)
-        .then((res) => res.blob())
-        .then(async (blob) => {
-          const formData = new FormData();
-          formData.append("file", blob, "myFile.wav");
-          console.log("FORM DATA: ", formData);
-          
-  
-          // Send form data to server
-          await axios.post("http://localhost:8000/audio", formData, { 
-            headers: { "Content-Type": "audio/mpeg" },
-            responseType: "arraybuffer" 
-          }).then((res: any) => {
-            const blob = res.data
-            const audio = new Audio();
-            audio.src = createBlobUrl(blob);
-  
-            const botMessage = { sender: "bot", blobUrl: audio.src };
-            messagesArr.push(botMessage);
-            setMessages(messagesArr);
 
-            // Automatically play bot's response
-            setLoading(false);
-            audio.play();            
-          }).catch((err) => {
-            console.log(err);
-          })
-        });
-      } catch (error) {
-        console.log("RECORDING ERROR: ", error);
-      } finally {
-        setLoading(false);
+      // Convert recorded blob to form data
+      const request = await fetch(blobUrl);      
+      const response = await request.blob();
+      
+      const formData = new FormData();
+      formData.append("file", response, "myFile.wav");
+      console.log("FORM DATA: ", formData);
+
+      // Send form data with audio blob to server
+      const sendRequest = await axios.post("http://localhost:8000/audio", formData, {
+        headers: { "Content-Type": "audio/mpeg" },
+        responseType: "arraybuffer"
+      });
+
+      const blob = await sendRequest.data
+      console.log("BLOB: ", blob);
+      
+      const audio = new Audio();
+      audio.src = createBlobUrl(blob);
+
+      const botMessage = { sender: "bot", blobUrl: audio.src };
+      messagesArr.push(botMessage);
+      setMessages(messagesArr);
+
+      setLoading(false);
+      audio.play();
+    } catch (error) {
+      console.log("RECORDING ERROR: ", error);
+    } finally {
+      setLoading(false);
     }
   };
 
