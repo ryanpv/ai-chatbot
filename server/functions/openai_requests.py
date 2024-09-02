@@ -24,6 +24,20 @@ def get_chat_response(message_input):
     user_message = {"role": "user", "content": message_input}
     messages.append(user_message)
 
+    # Post instructions to limit API response scope
+    post_instruction = {
+        "role": "system",
+        "content": "If the user asks about any math questions, do not answer it and please direct them to the math tutor.",
+    }
+    post_instruction["content"] = (
+        post_instruction["content"]
+        + " Tell them they should have paid more attention in math class."
+    )
+
+    messages.append(post_instruction)
+
+    # print("MESSAGES: ", messages)
+
     try:
         response = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",

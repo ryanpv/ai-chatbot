@@ -27,7 +27,6 @@ function Controller() {
       
       const formData = new FormData();
       formData.append("file", response, "myFile.wav");
-      console.log("FORM DATA: ", formData);
 
       // Send form data with audio blob to server
       const sendRequest = await axios.post("http://localhost:8000/audio", formData, {
