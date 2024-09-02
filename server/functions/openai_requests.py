@@ -24,8 +24,6 @@ def get_chat_response(message_input):
     user_message = {"role": "user", "content": message_input}
     messages.append(user_message)
 
-    print("MESSAGES: ", messages)
-
     try:
         response = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",

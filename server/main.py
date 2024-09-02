@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, File, HTTPException, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
 from functions.database import reset_messages, store_messages
@@ -33,11 +33,14 @@ async def check_health():
     return {"message": "Hello World"}
 
 
-@app.get("/audio")
-async def get_audio():
+@app.post("/audio")
+async def post_audio(file: UploadFile = File(...)):
     try:
-        # audio_input = open("assets/hello_world.mp3", "rb")
-        audio_input = open("assets/recording.mp3", "rb")
+        print("AUDIO FILE RECEIVED")
+        with open(file.filename, "wb") as buffer:
+            buffer.write(file.file.read())
+        audio_input = open(file.filename, "rb")
+
         message_decoded = convert_audio_to_text(audio_input)
 
         if not message_decoded:
