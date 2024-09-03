@@ -12,6 +12,7 @@ def convert_audio_to_text(audio_file):
     try:
         transcript = openai.Audio.transcribe("whisper-1", audio_file)
         message_text = transcript["text"]
+
         return message_text
     except Exception as e:
         print("CONVERT_AUDIO_TO_TEXT ERROR: ", e)
@@ -25,6 +26,9 @@ def get_chat_response(message_input):
     messages.append(user_message)
 
     # Post instructions to limit API response scope
+    # Do not justify answers
+    # Do not give information not mentioned in the context information
+    # Do not provide any information that is not mentioned in the provided context
     post_instruction = {
         "role": "system",
         "content": "If the user asks about any math questions, do not answer it and please direct them to the math tutor.",
@@ -35,8 +39,6 @@ def get_chat_response(message_input):
     )
 
     messages.append(post_instruction)
-
-    # print("MESSAGES: ", messages)
 
     try:
         response = openai.ChatCompletion.create(

@@ -20,7 +20,7 @@ def get_recent_messages():
     x = random.uniform(0, 1)
     if x < 0.5:
         learn_instruction["content"] = (
-            learn_instruction["content"] + " Your response will include some sass."
+            learn_instruction["content"] + " Your response will include some attitude."
         )
     else:
         learn_instruction["content"] = (
@@ -33,6 +33,7 @@ def get_recent_messages():
         with open(file_name) as user_file:
             data = json.load(user_file)
 
+            # Use last 5 messages for most recent context
             if data:
                 if len(data) < 5:
                     for item in data:

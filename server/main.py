@@ -42,10 +42,10 @@ async def post_audio(file: UploadFile = File(...)):
         audio_input = open(file.filename, "rb")
 
         message_decoded = convert_audio_to_text(audio_input)
+        print("USER message Decoded: ", message_decoded)
 
         if not message_decoded:
             return HTTPException(status_code=400, detail="Failed to decode audio")
-        print("USER message Decoded: ", message_decoded)
 
         chat_response = get_chat_response(message_decoded)
 

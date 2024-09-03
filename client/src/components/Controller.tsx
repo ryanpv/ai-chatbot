@@ -25,6 +25,7 @@ function Controller() {
       const request = await fetch(blobUrl);      
       const response = await request.blob();
       
+      
       const formData = new FormData();
       formData.append("file", response, "myFile.wav");
 
@@ -35,7 +36,6 @@ function Controller() {
       });
 
       const blob = await sendRequest.data
-      console.log("BLOB: ", blob);
       
       const audio = new Audio();
       audio.src = createBlobUrl(blob);

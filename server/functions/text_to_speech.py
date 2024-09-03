@@ -26,5 +26,5 @@ def convert_text_to_speech(message):
     if response.status_code == 200:
         return response.content
     else:
-        print("ERROR GETTING RESPONSE FOR CONVERSION", response)
+        print("ERROR GETTING RESPONSE FOR TEXT-TO-SPEECH CONVERSION", response)
         return
