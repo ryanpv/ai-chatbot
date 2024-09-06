@@ -1,6 +1,9 @@
 # Voice Chatbot Project
 
 ## Overview
+
+I created this project with the intended purpose of having a personalized chatbot assistant that I can have a conversation with.
+
 This project is a chatbot that allows users to interact with it using their voice recordings and receive an audio response. The server handles the interaction by leveraging OpenAI's Whisper-1 model and Chat Completions API. The voice comes from Elevenlabs API, which has many other options for voices.
 
 ## Features
