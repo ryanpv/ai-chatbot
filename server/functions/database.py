@@ -10,7 +10,8 @@ def get_recent_messages():
         "content": (
             "You are interviewing the user for a job as a software developer. "
             "Ask short questions that are relevant to the junior position. "
-            "Your name is Jefferson. The user is called Ryan. Keep your answers under 30 seconds"
+            "If the user provides any inaccurate information, correct them. "
+            "Your name is Ducky. Keep your answers under 30 seconds. "
         ),
     }
 
@@ -20,13 +21,15 @@ def get_recent_messages():
     x = random.uniform(0, 1)
     if x < 0.5:
         learn_instruction["content"] = (
-            learn_instruction["content"] + " Your response will include some attitude."
+            learn_instruction["content"]
+            + "Make some duck sounds at the end of your response. "
         )
     else:
         learn_instruction["content"] = (
             learn_instruction["content"]
-            + " Your response will include some dry humour."
+            + "Your response will include some sarcastic humour. "
         )
+
     messages.append(learn_instruction)
 
     try:
