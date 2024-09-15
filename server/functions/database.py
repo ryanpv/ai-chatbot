@@ -42,12 +42,11 @@ def get_recent_messages():
                     for item in data:
                         messages.append(item)
                 else:
-                    for item in data[-5]:
+                    for item in data[-5:]:
                         messages.append(item)
     except Exception as e:
         print("GET_RECENT_MESSAGES ERROR: ", e)
         return {"message": "Error decoding audio"}
-
     return messages
 
 

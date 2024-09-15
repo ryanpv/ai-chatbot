@@ -36,7 +36,6 @@ async def check_health():
 @app.post("/audio")
 async def post_audio(file: UploadFile = File(...)):
     try:
-        print("AUDIO FILE RECEIVED")
         with open(file.filename, "wb") as buffer:
             buffer.write(file.file.read())
         audio_input = open(file.filename, "rb")
