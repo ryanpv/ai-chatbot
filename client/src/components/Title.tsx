@@ -15,7 +15,7 @@ export default function Title({ setMessages }: Props) {
     await axios.get("http://localhost:8000/reset").then((response) => {
       if (response.status === 200) {
         console.log("Resetting conversation");
-        alert(response.data);
+        alert(response.data.message);
         
         setMessages([]);
       } else {

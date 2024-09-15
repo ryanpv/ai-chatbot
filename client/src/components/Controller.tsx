@@ -61,7 +61,7 @@ function Controller() {
       <div className='flex flex-col justify-between h-full overflow-y-scroll pb-96'>
         {/* Conversation */}
         <div className='mt-5 px-5'>
-          { !loading && messages.map((audio, idx) => {
+          { messages.map((audio, idx) => {
             return (
               <div 
                 key={ idx + audio.sender } 

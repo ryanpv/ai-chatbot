@@ -73,4 +73,4 @@ async def post_audio(file: UploadFile = File(...)):
 @app.get("/reset")
 def reset_conversation():
     reset_messages()
-    return {"message": "Conversation has been resetreset"}
+    return {"message": "Conversation has been reset."}
