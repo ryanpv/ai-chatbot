@@ -18,7 +18,7 @@ function Controller() {
       setLoading(true);    
   
       // append recorded message to messages array
-      const myMessage = { sender: "me", blobUrl };
+      const myMessage = { sender: "Me", blobUrl };
       const messagesArr = [...messages, myMessage];
 
       // Convert recorded blob to form data
@@ -40,7 +40,7 @@ function Controller() {
       const audio = new Audio();
       audio.src = createBlobUrl(blob);
 
-      const botMessage = { sender: "bot", blobUrl: audio.src };
+      const botMessage = { sender: "Ducky", blobUrl: audio.src };
       messagesArr.push(botMessage);
       setMessages(messagesArr);
 
@@ -65,17 +65,17 @@ function Controller() {
             return (
               <div 
                 key={ idx + audio.sender } 
-                className={ "flex flex-col " + (audio.sender === "bot" && "flex items-end") }
+                className={ "flex flex-col " + (audio.sender === "Ducky" && "flex items-end") }
               >
                 <div className='mt-4'>
                   <p 
-                    className={ audio.sender === "bot" ? "text-right mr-2 italic text-green-500" : "ml-2 italic text-blue-500" }
+                    className={ `font-semibold ${ audio.sender === "Ducky" ? "text-right mr-2 italic text-yellow-500" : "ml-2 italic text-blue-500"}` }
                   >
                     { audio.sender }
                   </p>
 
                   {/* Audio Message  */}
-                  <audio src={ audio.blobUrl } className='appearance-none' controls />
+                  <audio src={ audio.blobUrl } className='rounded-full' controls />
                 </div>
               </div>
               );
@@ -92,7 +92,7 @@ function Controller() {
         </div>
 
         {/* Recorder  */}
-        <div className='fixed bottom-0 w-full py-6 border-t text-center bg-gradient-to-r from-sky-500 to-green-500'>
+        <div className='fixed bottom-0 w-full py-6 border-t text-center bg-sky-400'>
           <div className='flex justify-center items-center w-full'>
             <div>
               <RecordMessage handleStop={ handleStop } />

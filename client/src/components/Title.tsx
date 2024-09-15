@@ -31,7 +31,7 @@ export default function Title({ setMessages }: Props) {
 
   return (
     <div className='flex flex-row justify-between items-center w-full p-4 bg-gray-900 text-white font-bold shadow'>
-      <div className='italic'>Chatbot Doggo</div>
+      <div className='italic'>Chatbot Ducky</div>
       <button className={ "transition-all duration-300 text-blue-300 hover:text-pink-500 " + (isResetting && "animate-pulse") } 
         onClick={ resetConversion }
       >

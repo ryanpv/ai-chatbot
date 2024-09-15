@@ -17,13 +17,13 @@ function RecordMessage({ handleStop }: Props) {
             <button 
               onMouseDown={ startRecording } 
               onMouseUp={ stopRecording }
-              className="bg-white p-4 rounded-full shadow-lg"
+              className="bg-sky-100 p-4 rounded-full shadow-lg"
             >
               <RecordIcon 
                 classText={ status === "recording" ? "animate-pulse text-red-500" : "text-sky-500" } 
               />
             </button>
-            <p className="mt-2 text-white font-light">{ status }</p>
+            <p className="mt-2 text-white font-semibold">{ status[0].toUpperCase() + status.slice(1) }</p>
           </div> 
         )
       }
